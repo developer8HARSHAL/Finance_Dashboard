@@ -1,11 +1,5 @@
 {
-  "finance_tracker": {
-    "meta": {
-      "owner": "Harshal Pinge",
-      "opening_balance": 25000,
-      "currency": "INR"
-    },
-    "transactions": [
+      "transactions": [
       {
         "txn_id": "1",
         "date": "2025-01-01",
@@ -1174,6 +1168,12 @@
         "expense": 299,
         "running_balance": 275999
       }
-    ]
-  }
+    ],
+
+    "meta": {
+      "owner": "Harshal Pinge",
+      "opening_balance": 25000,
+      "currency": "INR"
+    }
+
 }

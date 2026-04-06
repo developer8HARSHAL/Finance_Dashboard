@@ -11,12 +11,19 @@
         |-- App.jsx
         |-- assets
         |-- components
+            |-- SideBar.jsx
             |-- StatsCard.jsx
-        |-- Dashboard.jsx
+            |-- TransactionTable.jsx
+        |-- context
+            |-- AppContext.jsx
+            |-- FinanceContext.jsx
+            |-- ThemeContext.jsx
         |-- data
             |-- finance.json
         |-- hooks
             |-- useFinanceData.js
         |-- index.css
         |-- main.jsx
+        |-- pages
+            |-- Dashboard.jsx
     |-- vite.config.js
