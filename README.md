@@ -2,7 +2,7 @@
 
 A personal finance dashboard built with React. Track income, expenses, and spending patterns with role-based access control.
 
-![Dashboard Overview](./src/assets/screenshots/dashboard.png)
+![Dashboard Overview](./finance%20dashboard//src/assets/screenshots/dashboard.png)
 
 ---
 
@@ -25,7 +25,7 @@ npm run dev:all
 - Role-based UI — Admin / Viewer
 - Dark / light mode toggle
 
-![Transaction Table](./src//assets/screenshots/table.png)
+![Transaction Table](./finance%20dashboard/src/assets/screenshots/table.png)
 
 ---
 
