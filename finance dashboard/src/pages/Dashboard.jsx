@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import StatsCard from '../components/StatsCard';
 import SideBar from '../components/SideBar';
-import TransactionTable from '../components/TransactionTable';
 import { useFinance } from '../context/FinanceContext';
 
 export default function Dashboard() {
 
   const { dark, toggletheme } = useTheme();
-  const { balance, totalIncome, totalExpense, transactions } = useFinance();
+  const { balance, totalIncome, totalExpense, filtered, search, setSearch, filterType, setFilterType, filterMonth, setFilterMonth, transactions } = useFinance();
   console.log(balance, totalIncome, totalExpense, transactions.length)
+
 
   return (
     <div className="flex h-screen w-screen overflow-hidden transition-colors duration-300 bg-gray-100">
@@ -37,7 +37,7 @@ export default function Dashboard() {
 
 
         {/* main class*/}
-        <main className='flex-1 overflow-x-auto p-6 '>
+        <main className='flex-1 overflow-y-auto p-6 '>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6'>
             <StatsCard title="total balance" value={balance} prefix="₹" />
             <StatsCard title="total income" value={totalIncome} prefix="₹" />
@@ -45,17 +45,68 @@ export default function Dashboard() {
           </div>
           {/* chart*/}
 
-          <div className='flex gap-8'>
-            <div className='w-40 h-40 shrink-0 bg-white dark:bg-white  rounded-2xl p-6'>
-            </div>
-
-            <div className='flex-2 bg-gray-800 dark:bg-white rounded-2xl p-6 min-h-[350px]'>
+          <div className='flex lg:flex-2 md:flex-1 gap-8'>
+            <div className='flex-1  bg-white dark:bg-gray-800 rounded-2xl p-6 min-h-[350px]'>
               graph
             </div>
-            <div className='w-80  shrink-0 bg-sky-100 dark:bg-white  rounded-2xl p-6'>
+            <div className='flex-1  shrink-0 bg-white dark:bg-gray-800  rounded-2xl p-6'>
               <SideBar />
             </div>
 
+          </div>
+
+
+          <div className='flex gap-3 p-3 bg-gray-800 rounded-t-2xl mt-8'>
+            <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search description..."
+              className="flex-1 px-3 py-1.5 rounded-lg text-sm bg-gray-200 text-black placeholder-gray-400 outline-none"
+            />
+            <select
+              value={filterType}
+              onChange={e => setFilterType(e.target.value)}
+              className="px-3 py-1.5 rounded-lg text-sm bg-gray-200 text-black outline-none"
+            >
+              <option value="all">All Types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <select
+              value={filterMonth}
+              onChange={e => setFilterMonth(e.target.value)}
+              className="px-3 py-1.5 rounded-lg text-sm bg-gray-200 text-black outline-none"
+            >
+              <option value="all">All Months</option>
+              {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(m => (
+                <option key={m} value={m}>{m}</option>
+              ))}
+            </select>
+          </div>
+          <div className="overflow-y-auto max-h-80 bg-white text-black dark:text-white dark:bg-gray-800 rounded-2xl mt-6 ">
+
+            <table className="w-full text-sm">
+              <thead className="sticky top-0 bg-gray-800 text-white">
+                <tr>
+                  <th className="text-left p-3">Date</th>
+                  <th className="text-left p-3">Description</th>
+                  <th className="text-left p-3">Category</th>
+                  <th className="text-left p-3">Type</th>
+                  <th className="text-left p-3">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((t) => (
+                  <tr key={t.txn_id} className="border-b border-gray-700">
+                    <td className="p-3">{t.date}</td>
+                    <td className="p-3">{t.description}</td>
+                    <td className="p-3">{t.category}</td>
+                    <td className="p-3">{t.type}</td>
+                    <td className="p-3">₹{t.amount.toLocaleString('en-IN')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
         </main>

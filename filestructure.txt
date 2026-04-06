@@ -13,7 +13,6 @@
         |-- components
             |-- SideBar.jsx
             |-- StatsCard.jsx
-            |-- TransactionTable.jsx
         |-- context
             |-- AppContext.jsx
             |-- FinanceContext.jsx
