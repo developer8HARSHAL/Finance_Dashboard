@@ -1,10 +1,8 @@
 import React from 'react'
+import Dashboard from './pages/Dashboard'
 
 export default function App() {
   return (
-    <div >
-      <h1 className='text-white'>finance dashboard</h1>
-      
-    </div>
+    <Dashboard/>
   )
 }
