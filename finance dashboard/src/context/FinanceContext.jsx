@@ -13,7 +13,6 @@ export default function FinanceProvider({ children }) {
   const [filterType, setFilterType] = useState('all')
   const [filterMonth, setFilterMonth] = useState('all')
 
-  // fetch runs once when the app loads
   useEffect(() => {
     fetch('http://localhost:3001/transactions')
       .then(res => {

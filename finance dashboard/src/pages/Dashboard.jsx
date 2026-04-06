@@ -3,11 +3,12 @@ import { useTheme } from '../context/ThemeContext'
 import StatsCard from '../components/StatsCard';
 import SideBar from '../components/SideBar';
 import { useFinance } from '../context/FinanceContext';
-
+import SpendingChart from '../components/SpendingChart';
+import TrendChart from '../components/TrendChart';
 export default function Dashboard() {
 
   const { dark, toggletheme } = useTheme();
-  const { balance, totalIncome, totalExpense, filtered, search, setSearch, filterType, setFilterType, filterMonth, setFilterMonth, transactions } = useFinance();
+  const { balance, totalIncome, totalExpense, filtered, search, setSearch, filterType, setFilterType, filterMonth, setFilterMonth, transactions, role, setRole } = useFinance();
   console.log(balance, totalIncome, totalExpense, transactions.length)
 
 
@@ -29,10 +30,20 @@ export default function Dashboard() {
           </h1>
           <button
             onClick={toggletheme}
-            className="px-4 py-2 rounded-lg bg-white dark:bg-gray-700 text-sm text-gray-700 dark:text-white"
+            className="px-4 py-2 rounded-lg bg-white dark:bg-gray-700 text-sm text-gray-700 dark:text-white "
           >
             {dark === "light" ? "🌙 Dark" : "☀️ Light"}
           </button>
+
+          <select
+            value={role}
+            onChange={e => setRole(e.target.value)}
+            className="px-3 py-1.5 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-700 dark:text-white outline-none "
+          >
+            <option value="viewer">👁 Viewer</option>
+            <option value="admin">🛠 Admin</option>
+          </select>
+          {role === 'admin' && <th className="text-left p-3">Actions</th>}
         </header>
 
 
@@ -47,16 +58,18 @@ export default function Dashboard() {
 
           <div className='flex lg:flex-2 md:flex-1 gap-8'>
             <div className='flex-1  bg-white dark:bg-gray-800 rounded-2xl p-6 min-h-[350px]'>
-              graph
+              <TrendChart />
             </div>
             <div className='flex-1  shrink-0 bg-white dark:bg-gray-800  rounded-2xl p-6'>
-              <SideBar />
+              <SpendingChart />
             </div>
 
           </div>
 
 
           <div className='flex gap-3 p-3 bg-gray-800 rounded-t-2xl mt-8'>
+
+
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -102,7 +115,18 @@ export default function Dashboard() {
                     <td className="p-3">{t.description}</td>
                     <td className="p-3">{t.category}</td>
                     <td className="p-3">{t.type}</td>
-                    <td className="p-3">₹{t.amount.toLocaleString('en-IN')}</td>
+                    <td className="p-3">₹{t.amount.toLocaleString('en-IN')}
+                      {role === 'admin' && (
+                        <td className="p-3">
+                          <button
+                            onClick={() => handleDelete(t.txn_id)}
+                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
